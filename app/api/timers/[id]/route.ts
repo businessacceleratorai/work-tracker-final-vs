@@ -17,7 +17,7 @@ export async function PUT(
     
     const result = await pool.query(
       'UPDATE timers SET remaining = $1, is_running = $2, is_completed = $3 WHERE id = $4 AND user_id = $5 RETURNING *',
-      [remaining, is_running, is_completed, params.id, user.userId]
+      [remaining, is_running, is_completed, params.id, user.id]
     )
     
     if (result.rows.length === 0) {
@@ -44,7 +44,7 @@ export async function DELETE(
 
     const result = await pool.query(
       'DELETE FROM timers WHERE id = $1 AND user_id = $2 RETURNING *',
-      [params.id, user.userId]
+      [params.id, user.id]
     )
     
     if (result.rows.length === 0) {

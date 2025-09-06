@@ -18,7 +18,7 @@ export async function PUT(
     
     const result = await pool.query(
       'UPDATE tasks SET status = $1, completed_at = $2 WHERE id = $3 AND user_id = $4 RETURNING *',
-      [status, completed_at, params.id, user.userId]
+      [status, completed_at, params.id, user.id]
     )
     
     if (result.rows.length === 0) {
@@ -45,7 +45,7 @@ export async function DELETE(
 
     const result = await pool.query(
       'DELETE FROM tasks WHERE id = $1 AND user_id = $2 RETURNING *',
-      [params.id, user.userId]
+      [params.id, user.id]
     )
     
     if (result.rows.length === 0) {

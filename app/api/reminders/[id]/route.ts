@@ -17,7 +17,7 @@ export async function PUT(
     
     const result = await pool.query(
       'UPDATE reminders SET next_trigger = $1, is_active = $2 WHERE id = $3 AND user_id = $4 RETURNING *',
-      [next_trigger, is_active, params.id, user.userId]
+      [next_trigger, is_active, params.id, user.id]
     )
     
     if (result.rows.length === 0) {
@@ -44,7 +44,7 @@ export async function DELETE(
 
     const result = await pool.query(
       'DELETE FROM reminders WHERE id = $1 AND user_id = $2 RETURNING *',
-      [params.id, user.userId]
+      [params.id, user.id]
     )
     
     if (result.rows.length === 0) {

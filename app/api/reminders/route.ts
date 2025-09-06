@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
     const result = await pool.query(
       'SELECT * FROM reminders WHERE user_id = $1 ORDER BY created_at DESC',
-      [user.userId]
+      [user.id]
     )
     return NextResponse.json(result.rows)
   } catch (error) {
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const { name, type, interval_seconds, next_trigger } = await request.json()
     const result = await pool.query(
       'INSERT INTO reminders (name, type, interval_seconds, next_trigger, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, type, interval_seconds, next_trigger, user.userId]
+      [name, type, interval_seconds, next_trigger, user.id]
     )
     return NextResponse.json(result.rows[0])
   } catch (error) {
@@ -46,7 +46,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    await pool.query('DELETE FROM reminders WHERE user_id = $1', [user.userId])
+    await pool.query('DELETE FROM reminders WHERE user_id = $1', [user.id])
     return NextResponse.json({ message: 'All reminders deleted' })
   } catch (error) {
     console.error('Error deleting reminders:', error)

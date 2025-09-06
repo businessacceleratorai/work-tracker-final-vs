@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
     const result = await pool.query(
       'SELECT * FROM timers WHERE user_id = $1 ORDER BY created_at DESC',
-      [user.userId]
+      [user.id]
     )
     return NextResponse.json(result.rows)
   } catch (error) {
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const { name, duration, remaining } = await request.json()
     const result = await pool.query(
       'INSERT INTO timers (name, duration, remaining, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
-      [name, duration, remaining, user.userId]
+      [name, duration, remaining, user.id]
     )
     return NextResponse.json(result.rows[0])
   } catch (error) {
@@ -46,7 +46,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    await pool.query('DELETE FROM timers WHERE user_id = $1', [user.userId])
+    await pool.query('DELETE FROM timers WHERE user_id = $1', [user.id])
     return NextResponse.json({ message: 'All timers deleted' })
   } catch (error) {
     console.error('Error deleting timers:', error)

@@ -10,9 +10,9 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Clear all data for the authenticated user only
-    await pool.query('DELETE FROM tasks WHERE user_id = $1', [user.userId])
-    await pool.query('DELETE FROM timers WHERE user_id = $1', [user.userId])
-    await pool.query('DELETE FROM reminders WHERE user_id = $1', [user.userId])
+    await pool.query('DELETE FROM tasks WHERE user_id = $1', [user.id])
+    await pool.query('DELETE FROM timers WHERE user_id = $1', [user.id])
+    await pool.query('DELETE FROM reminders WHERE user_id = $1', [user.id])
     
     return NextResponse.json({ message: 'All data cleared successfully' })
   } catch (error) {
