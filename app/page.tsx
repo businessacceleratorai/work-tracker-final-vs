@@ -57,6 +57,83 @@ function WorkTrackerContent() {
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const reminderIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
+  // API functions with authentication headers
+  const getAuthHeaders = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  })
+
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch('/api/tasks', {
+        headers: getAuthHeaders(),
+        credentials: 'include'
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setTasks(data)
+      }
+    } catch (error) {
+      console.error('Error fetching tasks:', error)
+    }
+  }
+
+  const fetchTimers = async () => {
+    try {
+      const response = await fetch('/api/timers', {
+        headers: getAuthHeaders(),
+        credentials: 'include'
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setTimers(data)
+      }
+    } catch (error) {
+      console.error('Error fetching timers:', error)
+    }
+  }
+
+  const fetchReminders = async () => {
+    try {
+      const response = await fetch('/api/reminders', {
+        headers: getAuthHeaders(),
+        credentials: 'include'
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setReminders(data)
+      }
+    } catch (error) {
+      console.error('Error fetching reminders:', error)
+    }
+  }
+
+  const updateTimer = async (timerId: number, updates: Partial<Timer>) => {
+    try {
+      await fetch(`/api/timers/${timerId}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        credentials: 'include',
+        body: JSON.stringify(updates)
+      })
+    } catch (error) {
+      console.error('Error updating timer:', error)
+    }
+  }
+
+  const updateReminder = async (reminderId: number, updates: Partial<Reminder>) => {
+    try {
+      await fetch(`/api/reminders/${reminderId}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        credentials: 'include',
+        body: JSON.stringify(updates)
+      })
+    } catch (error) {
+      console.error('Error updating reminder:', error)
+    }
+  }
+
   // Load data from database when user is authenticated
   useEffect(() => {
     if (user && token) {
@@ -153,57 +230,6 @@ function WorkTrackerContent() {
     oscillator.stop(audioContext.currentTime + 0.5)
   }
 
-  // API functions with authentication headers
-  const getAuthHeaders = () => ({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  })
-
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch('/api/tasks', {
-        headers: getAuthHeaders(),
-        credentials: 'include'
-      })
-      if (response.ok) {
-        const data = await response.json()
-        setTasks(data)
-      }
-    } catch (error) {
-      console.error('Error fetching tasks:', error)
-    }
-  }
-
-  const fetchTimers = async () => {
-    try {
-      const response = await fetch('/api/timers', {
-        headers: getAuthHeaders(),
-        credentials: 'include'
-      })
-      if (response.ok) {
-        const data = await response.json()
-        setTimers(data)
-      }
-    } catch (error) {
-      console.error('Error fetching timers:', error)
-    }
-  }
-
-  const fetchReminders = async () => {
-    try {
-      const response = await fetch('/api/reminders', {
-        headers: getAuthHeaders(),
-        credentials: 'include'
-      })
-      if (response.ok) {
-        const data = await response.json()
-        setReminders(data)
-      }
-    } catch (error) {
-      console.error('Error fetching reminders:', error)
-    }
-  }
-
   const addTask = async () => {
     if (newTaskText.trim()) {
       try {
@@ -295,19 +321,6 @@ function WorkTrackerContent() {
     }
   }
 
-  const updateTimer = async (timerId: number, updates: Partial<Timer>) => {
-    try {
-      await fetch(`/api/timers/${timerId}`, {
-        method: 'PUT',
-        headers: getAuthHeaders(),
-        credentials: 'include',
-        body: JSON.stringify(updates)
-      })
-    } catch (error) {
-      console.error('Error updating timer:', error)
-    }
-  }
-
   const toggleTimer = async (timerId: number) => {
     const timer = timers.find(t => t.id === timerId)
     if (timer) {
@@ -375,19 +388,6 @@ function WorkTrackerContent() {
       } catch (error) {
         console.error('Error adding reminder:', error)
       }
-    }
-  }
-
-  const updateReminder = async (reminderId: number, updates: Partial<Reminder>) => {
-    try {
-      await fetch(`/api/reminders/${reminderId}`, {
-        method: 'PUT',
-        headers: getAuthHeaders(),
-        credentials: 'include',
-        body: JSON.stringify(updates)
-      })
-    } catch (error) {
-      console.error('Error updating reminder:', error)
     }
   }
 
