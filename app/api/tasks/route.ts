@@ -27,10 +27,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { text } = await request.json()
+    const { title, text, description } = await request.json()
+    const taskTitle = title || text || 'Untitled Task'
+    const taskDescription = description || ''
+    
     const result = await pool.query(
-      'INSERT INTO tasks (title, description, priority, due_date, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [text, user.id]
+      'INSERT INTO tasks (title, description, completed, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
+      [taskTitle, taskDescription, false, user.id]
     )
     return NextResponse.json(result.rows[0])
   } catch (error) {

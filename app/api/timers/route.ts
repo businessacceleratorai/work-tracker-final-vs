@@ -27,10 +27,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { name, duration, remaining } = await request.json()
+    const { name, description, duration, start_time, end_time, task_id } = await request.json()
     const result = await pool.query(
-      'INSERT INTO timers (name, duration, remaining, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
-      [name, duration, remaining, user.id]
+      'INSERT INTO timers (name, description, start_time, end_time, duration, user_id, task_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [
+        name || 'Unnamed Timer',
+        description || '',
+        start_time || null,
+        end_time || null,
+        duration || 0,
+        user.id,
+        task_id || null
+      ]
     )
     return NextResponse.json(result.rows[0])
   } catch (error) {

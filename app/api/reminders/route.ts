@@ -27,10 +27,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { name, type, interval_seconds, next_trigger } = await request.json()
+    const { title, name, description, reminder_time, is_completed } = await request.json()
+    const reminderTitle = title || name || 'Untitled Reminder'
+    const reminderTime = reminder_time || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // Default to 24 hours from now
+    
     const result = await pool.query(
-      'INSERT INTO reminders (name, type, interval_seconds, next_trigger, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, type, interval_seconds, next_trigger, user.id]
+      'INSERT INTO reminders (title, description, reminder_time, is_completed, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [
+        reminderTitle,
+        description || '',
+        reminderTime,
+        is_completed || false,
+        user.id
+      ]
     )
     return NextResponse.json(result.rows[0])
   } catch (error) {
