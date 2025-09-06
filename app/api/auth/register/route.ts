@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
         success: true,
         message: 'User registered successfully',
         user: {
-          id: user.userId,
+          id: user.id,
           email: user.email,
           name: user.name,
           created_at: user.created_at
