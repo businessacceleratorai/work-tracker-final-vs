@@ -72,8 +72,8 @@ A modern, full-stack productivity application built with Next.js, TypeScript, an
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/work-tracker.git
-   cd work-tracker
+   git clone https://github.com/businessacceleratorai/work-tracker-final-vs.git
+   cd work-tracker-final-vs
    ```
 
 2. **Install dependencies**
@@ -119,7 +119,7 @@ A modern, full-stack productivity application built with Next.js, TypeScript, an
 
 ### Vercel + Supabase (Recommended)
 
-For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+For detailed deployment instructions, see [VERCEL_SETUP.md](./VERCEL_SETUP.md).
 
 **Quick Deploy:**
 1. Fork this repository
@@ -128,7 +128,7 @@ For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 4. Set environment variables in Vercel
 5. Deploy!
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/work-tracker)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/businessacceleratorai/work-tracker-final-vs)
 
 ## 🗄️ Database Schema
 
@@ -141,7 +141,7 @@ The application uses PostgreSQL with the following main tables:
 - **timers** - Time tracking records
 - **reminders** - User reminders and notifications
 
-For the complete database schema, see [DEPLOYMENT.md](./DEPLOYMENT.md#database-schema-setup).
+For the complete database schema, see [VERCEL_SETUP.md](./VERCEL_SETUP.md#database-schema-setup).
 
 ## 🎯 Usage
 
@@ -214,7 +214,7 @@ npm run type-check   # Run TypeScript checks
 - Check Node.js version compatibility
 - Verify all dependencies are installed
 
-For more troubleshooting tips, see [DEPLOYMENT.md](./DEPLOYMENT.md#troubleshooting).
+For more troubleshooting tips, see [VERCEL_SETUP.md](./VERCEL_SETUP.md#troubleshooting).
 
 ## 📄 License
 
@@ -223,8 +223,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🤝 Support
 
 - 📧 Email: support@worktracker.com
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/work-tracker/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/work-tracker/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/businessacceleratorai/work-tracker-final-vs/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/businessacceleratorai/work-tracker-final-vs/discussions)
 
 ## 🙏 Acknowledgments
 
